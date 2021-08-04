@@ -1,0 +1,17 @@
+body {
+    background: url('../login_background.jpg') no-repeat center center fixed;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.login-table {
+    background: rgba(134,213,204,255);
+    padding: 20px;
+    border: groove;
+    border-radius: 15px;
+}
+
+.login-table input {
+    background: #5fa09c;
+}
