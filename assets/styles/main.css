@@ -1,10 +1,8 @@
 body {
-    cursor: url() auto;
+    cursor: url("../mouse.ico"), auto;
     background: url('../login_background.png') no-repeat center center fixed;
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
+    height: 700px;
 }
 .footer {
     position: fixed;
