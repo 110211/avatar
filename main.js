@@ -23,6 +23,21 @@ app.get('/login', (req, res) => {
     res.sendFile('./login.html', {root: __dirname})
 })
 
+app.get('/me', (req, res) => {
+    res.setHeader("content-type", "application/json; charset=utf-8")
+    let header = req.header('authorization')
+    let token = jwt.getTokenFromHeader(header)
+    let verify = jwt.verifyJWTToken(token)
+    if (!verify) {
+        res.send(JSON.stringify({message: "Token không hợp lệ hoặc đã hết hạn", success: false}))
+    } else {
+        res.send(JSON.stringify({message: 'Kiểm tra thông tin thành công', user: verify.user, success: true}))
+    }
+}) 
+
+app.get('/admin', (req, res) => {
+    res.sendFile('./admin.html', {root: __dirname})
+})
 /// api
 
 app.post('/api/login', async (req, res) => {
@@ -34,6 +49,7 @@ app.post('/api/login', async (req, res) => {
         res.send(JSON.stringify({
             success: true,
             token: jwt.createJWTToken({user: user}),
+            right: data[0].right,
             message: "Login thành công"
         }))
     } else {

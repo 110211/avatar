@@ -16,6 +16,11 @@
     <title>Login</title>
 </head>
 <body>
+    <script>
+    if (localStorage.getItem("token") !== null) {
+        window.location = "/"
+    }
+    </script>
     <div class="container">
         <div class="row">
             <div class="col"></div>

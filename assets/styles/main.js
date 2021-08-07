@@ -3,10 +3,48 @@ const login = async (user, pass, callback) => {
         callback(res)
     })
 }
-$(document).ready(function () {
-    if (localStorage.getItem("token") !== null) {
-        window.location = "/"
+    if (window.location.pathname == '/') {
+        var token = localStorage.getItem("token")
+        if (token === null) {
+            window.location = "/login"
+        } else {
+            $.ajax({
+                url: '/me',
+                type: 'get',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                success: function (data) {
+                    if (data.success) {
+                        $("#app").append('Login done. ')
+                        if (localStorage.getItem("right") == 9) $("#app").append('<span id="admin">Admin</span>')
+                        $("#logout-button").click(() => {
+                            localStorage.removeItem("token")
+                            window.location = "/login"
+                        })
+                        $("#admin").click(() => {
+                            window.location = "/admin"
+                        })
+                        $("#welcome").text("Chào bạn " + data.user)
+                    } else {
+                        localStorage.removeItem("token")
+                        alert(data.message)
+                        window.location = "./login"
+                    }
+                }
+            })
+        }
     }
+
+    if (window.location.pathname == "/admin") { 
+        if (localStorage.getItem("right") == 9) {
+            console.log("ok")
+        } else {
+            alert("mày ko phải admin?")
+            window.location = "/"
+        }
+    }
+$(document).ready(function () {
     $(".login-container").animate({marginTop: '40%'}, 1000)
     var play = 0;
     var sound = new Howl({
@@ -40,6 +78,7 @@ $(document).ready(function () {
                 if (res.success) {
                     alert(res.message)
                     localStorage.setItem('token', res.token)
+                    localStorage.setItem('right', res.right)
                     window.location = "/"
                 } else {
                     alert(res.message)
