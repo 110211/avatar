@@ -36,7 +36,7 @@ app.get('/me', (req, res) => {
 }) 
 
 app.get('/admin', (req, res) => {
-    res.sendFile('./admin.html', {root: __dirname})
+    res.sendFile('./adpanel.html', {root: __dirname})
 })
 /// api
 
